@@ -1,1 +1,189 @@
-PARTICIPANTS: use this file for creating the class diagram in mastery task 01
+@startuml
+
+class AddSongToPlaylistActivity {
+    - log: Logger
+    - playlistDao: PlaylistDao
+    - albumTrackDao: AlbumTrackDao
+
+    + handleRequest(addSongToPlayListRequest: AddSongToPlaylistRequest, context: Context): AddSongToPlaylistResult
+}
+
+class CreatePlaylistActivity {
+    - log: Logger
+    - playlistDao: PlaylistDao
+    + handleRequest(createPlaylistRequest: CreatePlaylistRequest, context: Context): CreatePlaylistResult
+}
+
+class GetPlaylistActivity {
+    - log: Logger
+    - playlistDao: PlaylistDao
+    + handleRequest(getPlaylistRequest: GetPlaylistRequest, context: Context): GetPlaylistResult
+}
+
+class GetPlaylistSongsActivity {
+    - log: Logger
+    - playlistDao: PlaylistDao
+    + handleRequest(getPlaylistSongsRequest: GetPlaylistSongsRequest, context: Context): GetPlaylistSongsResult
+}
+
+class UpdatePlaylistActivity {
+    - log: Logger
+    - playlistDao: PlaylistDao
+    + handleRequest(updatePlaylistRequest: UpdatePlaylistRequest, context: Context): UpdatePlaylistResult
+}
+
+class AlbumTrack {
+    - @DynamoDBHashKey asin: String
+    - @DynamoDBRangeKey trackNumber: Integer
+    - albumName: String
+    - songTitle: String
+}
+
+class Playlist {
+    - @DynamoDBHashKey id: String
+    - name: String
+    - customerId: String
+    - songCount: Integer
+    - tags: Set<String>
+    - songList: List<AlbumTrack>
+}
+
+class AlbumTrackDao {
+    - dynamoDbMapper: DynamoDBMapper
+}
+
+class PlaylistDao {
+    - dynamoDbMapper: DynamoDBMapper
+    + getPlaylist(id: String): Playlist
+}
+
+class AlbumTrackNotFoundException {
+}
+
+class InvalidAttributeValueException {
+}
+
+class PlaylistNotFoundException {
+}
+
+class AddSongToPlaylistRequest {
+    - id: String
+    - asin: String
+    - trackNumber: int
+    - queueNext: boolean
+    + getId(): String
+    + setId(id: String)
+}
+
+class CreatePlaylistRequest {
+    - name: String
+    - customerId: String
+    - tags: List<String>
+    + getName(): String
+    + setName(name: String)
+}
+
+class GetPlaylistRequest {
+    - id: String
+    + getId(): String
+    - setId(id: String)
+}
+
+class GetPlaylistSongsRequest {
+    - id: String
+    - order: SongOrder
+    + getId(): String
+    + setId(id: String)
+}
+
+class UpdatePlaylistRequest {
+    - id: String
+    - name: String
+    - customerId: String
+    + getId(): String
+    + setId(id: String)
+    + getName(): String
+    + setName(name: String)
+}
+
+class AddSongToPlaylistResult {
+    - songList: List<SongModel>
+}
+
+class CreatePlaylistResult {
+    - playlist: PlaylistModel
+}
+
+class GetPlaylistResult {
+    - playlist: PlaylistModel
+}
+
+class GetPlaylistSongsResult {
+    - songList: List<SongModel>
+}
+
+class UpdatePlaylistResult {
+    - playlist: PlaylistModel
+}
+
+class PlaylistModel {
+    - id: String
+    - name: String
+    - customerId: String
+    - songCount: int
+    - tags: List<String>
+    + getId(): String
+    + setId(id: String)
+    + getName(): String
+    + setName(name: String)
+}
+
+class SongModel {
+    - asin: String
+    - album: String
+    - trackNumber: int
+    - title: String
+}
+
+enum SongOrder {
+    DEFAULT
+    REVERSED
+    SHUFFLED
+}
+
+class MusicPlaylistServiceUtils {
+    + isValidString(stringToValidate: String): boolean
+    + generatePlaylistId(): String
+}
+
+AddSongToPlaylistActivity *--- PlaylistDao
+AddSongToPlaylistActivity *--- AlbumTrackDao
+AddSongToPlaylistActivity ---> AddSongToPlaylistRequest
+AddSongToPlaylistActivity ---> AddSongToPlaylistResult
+
+CreatePlaylistActivity    *--- PlaylistDao
+CreatePlaylistActivity    ---> CreatePlaylistRequest
+CreatePlaylistActivity    ---> CreatePlaylistResult
+
+GetPlaylistActivity       *--- PlaylistDao
+GetPlaylistActivity       ---> GetPlaylistRequest
+GetPlaylistActivity       ---> GetPlaylistResult
+
+GetPlaylistSongsActivity  *--- PlaylistDao
+GetPlaylistSongsActivity  ---> GetPlaylistSongsRequest
+GetPlaylistSongsActivity  ---> GetPlaylistSongsResult
+
+UpdatePlaylistActivity    *--- PlaylistDao
+UpdatePlaylistActivity    ---> UpdatePlaylistRequest
+UpdatePlaylistActivity    ---> UpdatePlaylistResult
+
+GetPlaylistSongsRequest   *--- SongOrder
+AddSongToPlaylistResult   *--- SongModel
+CreatePlaylistResult      *--- PlaylistModel
+GetPlaylistResult         *--- PlaylistModel
+GetPlaylistSongsResult    *--- SongModel
+UpdatePlaylistResult      *--- PlaylistModel
+
+Playlist                  *--- AlbumTrack
+PlaylistDao               ---> Playlist
+@enduml

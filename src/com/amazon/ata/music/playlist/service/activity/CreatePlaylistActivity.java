@@ -65,6 +65,7 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
         }
 
         String id = MusicPlaylistServiceUtils.generatePlaylistId();
+
         List<String> originalTags = createPlaylistRequest.getTags();
         Set<String> tags = new HashSet<>();
         if (originalTags != null) {

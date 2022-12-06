@@ -34,23 +34,35 @@ Remember that:
 List the class(es) that `App.java` provides that are **not** dependencies of other classes, that is, no other classes
  in the project depend on these classes
 
-* 
+* CreatePlaylistActivity
+* GetPlaylistActivity
+* UpdatePlaylistActivity
+* AddSongToPlaylistActivity
+* GetPlaylistSongActivity
 
 List the class(es) that `App.java` provides that **are** dependencies of other classes
 
-* 
+* PlaylistDao
+* AlbumTrackDao
+* DynamoDBMapper
 
 List the class(es) that `App.java` creates that have constructors we must annotate with `@Inject`
 
-* 
+* CreatePlaylistActivity
+* GetPlaylistActivity
+* UpdatePlaylistActivity
+* AddSongToPlaylistActivity
+* GetPlaylistSongActivity
+* PlaylistDao
+* AlbumTrackDao
 
 List the class(es) that `App.java` creates that we must provide in a Dagger module
 
-* 
+* DynamoDBMapper
 
 List the class(es) that `App.java` creates as Singletons.
 
-* 
+* DynamoDBMapper
 
 ### Pseudocode Dagger classes
 

@@ -32,11 +32,11 @@ public class UpdatePlaylistActivity implements RequestHandler<UpdatePlaylistRequ
     private final Logger log = LogManager.getLogger();
     private final PlaylistDao playlistDao;
 
-    public UpdatePlaylistActivity() {
-        this(PlaylistDao_Factory.create(DoubleCheck.provider(DaoModule_ProvideDynamoDBMapperFactory
-                        .create(new DaoModule())))
-                .get());
-    }
+    //public UpdatePlaylistActivity() {
+    //    this(PlaylistDao_Factory.create(DoubleCheck.provider(DaoModule_ProvideDynamoDBMapperFactory
+    //                    .create(new DaoModule())))
+    //            .get());
+    //}
 
     /**
      * Instantiates a new UpdatePlaylistActivity object.

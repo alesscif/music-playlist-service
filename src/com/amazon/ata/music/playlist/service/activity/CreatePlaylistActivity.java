@@ -36,11 +36,11 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
     private final Logger log = LogManager.getLogger();
     private PlaylistDao playlistDao;
 
-    public CreatePlaylistActivity() {
-        this(PlaylistDao_Factory.create(DoubleCheck.provider(DaoModule_ProvideDynamoDBMapperFactory
-                        .create(new DaoModule())))
-                .get());
-    }
+    //public CreatePlaylistActivity() {
+    //    this(PlaylistDao_Factory.create(DoubleCheck.provider(DaoModule_ProvideDynamoDBMapperFactory
+    //                    .create(new DaoModule())))
+    //            .get());
+    //}
 
     /**
      * Instantiates a new CreatePlaylistActivity object.

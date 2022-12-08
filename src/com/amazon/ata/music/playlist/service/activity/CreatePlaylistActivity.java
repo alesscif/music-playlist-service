@@ -55,7 +55,6 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
      */
     @Override
     public CreatePlaylistResult handleRequest(final CreatePlaylistRequest createPlaylistRequest, Context context)  {
-        DaggerServiceComponent.create().inject(this);
         log.info("Received CreatePlaylistRequest {}", createPlaylistRequest);
 
         String name = createPlaylistRequest.getName();

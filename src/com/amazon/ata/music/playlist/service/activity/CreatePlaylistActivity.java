@@ -1,7 +1,6 @@
 package com.amazon.ata.music.playlist.service.activity;
 
 import com.amazon.ata.music.playlist.service.converters.ModelConverter;
-import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeValueException;
@@ -29,13 +28,15 @@ import java.util.Set;
  */
 public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequest, CreatePlaylistResult> {
     private final Logger log = LogManager.getLogger();
-    @Inject public PlaylistDao playlistDao;
+    //@Inject
+    public PlaylistDao playlistDao;
+
+    //@Inject
+    //public CreatePlaylistActivity() {
+    //    DaggerServiceComponent.create().inject(this);
+    //}
 
     @Inject
-    public CreatePlaylistActivity() {
-        DaggerServiceComponent.create().inject(this);
-    }
-
     public CreatePlaylistActivity(PlaylistDao playlistDao) {
         this.playlistDao = playlistDao;
     }

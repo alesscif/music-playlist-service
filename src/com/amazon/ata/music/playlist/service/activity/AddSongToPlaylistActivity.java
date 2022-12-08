@@ -1,10 +1,8 @@
 package com.amazon.ata.music.playlist.service.activity;
 
 import com.amazon.ata.music.playlist.service.converters.ModelConverter;
-import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
-import com.amazon.ata.music.playlist.service.models.PlaylistModel;
 import com.amazon.ata.music.playlist.service.models.requests.AddSongToPlaylistRequest;
 import com.amazon.ata.music.playlist.service.models.results.AddSongToPlaylistResult;
 import com.amazon.ata.music.playlist.service.models.SongModel;
@@ -29,14 +27,17 @@ import java.util.List;
  */
 public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlaylistRequest, AddSongToPlaylistResult> {
     private final Logger log = LogManager.getLogger();
-    @Inject public PlaylistDao playlistDao;
-    @Inject public AlbumTrackDao albumTrackDao;
+    //@Inject
+    public PlaylistDao playlistDao;
+    //@Inject
+    public AlbumTrackDao albumTrackDao;
+
+    //@Inject
+    //public AddSongToPlaylistActivity() {
+    //    DaggerServiceComponent.create().inject(this);
+    //}
 
     @Inject
-    public AddSongToPlaylistActivity() {
-        DaggerServiceComponent.create().inject(this);
-    }
-
     public AddSongToPlaylistActivity(PlaylistDao playlistDao, AlbumTrackDao albumTrackDao) {
         this.playlistDao = playlistDao;
         this.albumTrackDao = albumTrackDao;

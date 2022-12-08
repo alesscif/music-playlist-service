@@ -20,4 +20,5 @@ public interface ServiceComponent {
     void inject(CreatePlaylistActivity create);
     void inject(UpdatePlaylistActivity update);
     void inject(AddSongToPlaylistActivity add);
+    void inject(GetPlaylistSongsActivity get);
 }

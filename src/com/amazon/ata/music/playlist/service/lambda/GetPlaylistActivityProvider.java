@@ -1,6 +1,6 @@
 package com.amazon.ata.music.playlist.service.lambda;
 
-import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
+//import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.music.playlist.service.dependency.ServiceComponent;
 import com.amazon.ata.music.playlist.service.models.requests.GetPlaylistRequest;
 import com.amazon.ata.music.playlist.service.models.results.GetPlaylistResult;
@@ -19,6 +19,6 @@ public class GetPlaylistActivityProvider implements RequestHandler<GetPlaylistRe
     }
 
     private ServiceComponent getServiceComponent() {
-        return DaggerServiceComponent.create();
+        return null;//DaggerServiceComponent.create();
     }
 }

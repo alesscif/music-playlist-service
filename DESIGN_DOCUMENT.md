@@ -5,7 +5,7 @@
 [Amazon Music Unlimited](https://www.amazon.com/b?ie=UTF8&node=15730321011)
 is a premium music subscription service featuring tens of millions of songs
 available to our millions of customers. We currently provide expert curated,
-premade playlists, but customers have often requested the ability to create
+pre-made playlists, but customers have often requested the ability to create
 and manage their own custom playlists.
 
 This design document describes the Amazon Music Playlist Service, a new
@@ -172,7 +172,7 @@ Below are the endpoints required to provide the MLP business requirements
       about 2500 songs in a single playlist, above the projected playlist size
       that customers will need in this phase, at the cost of having to store
       large items as we scale.
-    * A forward-thinking approach is create a separate table in which each song
+    * A forward-thinking approach is to create a separate table in which each song
       in a playlist is represented by a distinct item in the table (which
       contains the playlist ID and song identifiers). This removes the
       limitation of songs in a playlist, but consumes more data (and thus cost)

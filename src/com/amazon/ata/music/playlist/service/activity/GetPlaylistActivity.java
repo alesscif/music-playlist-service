@@ -21,7 +21,7 @@ import javax.inject.Inject;
  */
 public class GetPlaylistActivity implements RequestHandler<GetPlaylistRequest, GetPlaylistResult> {
     private final Logger log = LogManager.getLogger();
-    private final PlaylistDao playlistDao;
+    private  PlaylistDao playlistDao;
 
     /**
      * Instantiates a new GetPlaylistActivity object.

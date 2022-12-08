@@ -2,9 +2,6 @@ package com.amazon.ata.music.playlist.service.activity;
 
 import com.amazon.ata.music.playlist.service.converters.ModelConverter;
 import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
-import com.amazon.ata.music.playlist.service.dependency.DaoModule;
-import com.amazon.ata.music.playlist.service.dependency.DaoModule_ProvideDynamoDBMapperFactory;
-import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao_Factory;
 import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeValueException;
@@ -14,10 +11,8 @@ import com.amazon.ata.music.playlist.service.models.PlaylistModel;
 import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao;
 
 import com.amazon.ata.music.playlist.service.util.MusicPlaylistServiceUtils;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import dagger.internal.DoubleCheck;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,20 +29,13 @@ import java.util.Set;
  */
 public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequest, CreatePlaylistResult> {
     private final Logger log = LogManager.getLogger();
-    private PlaylistDao playlistDao;
+    @Inject public PlaylistDao playlistDao;
 
-    //public CreatePlaylistActivity() {
-    //    this(PlaylistDao_Factory.create(DoubleCheck.provider(DaoModule_ProvideDynamoDBMapperFactory
-    //                    .create(new DaoModule())))
-    //            .get());
-    //}
-
-    /**
-     * Instantiates a new CreatePlaylistActivity object.
-     *
-     * @param playlistDao PlaylistDao to access the playlists table.
-     */
     @Inject
+    public CreatePlaylistActivity() {
+        DaggerServiceComponent.create().inject(this);
+    }
+
     public CreatePlaylistActivity(PlaylistDao playlistDao) {
         this.playlistDao = playlistDao;
     }
@@ -67,6 +55,7 @@ public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequ
      */
     @Override
     public CreatePlaylistResult handleRequest(final CreatePlaylistRequest createPlaylistRequest, Context context)  {
+        DaggerServiceComponent.create().inject(this);
         log.info("Received CreatePlaylistRequest {}", createPlaylistRequest);
 
         String name = createPlaylistRequest.getName();

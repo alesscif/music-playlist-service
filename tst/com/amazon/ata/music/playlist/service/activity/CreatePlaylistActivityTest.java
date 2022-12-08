@@ -1,6 +1,7 @@
 package com.amazon.ata.music.playlist.service.activity;
 
 import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao;
+import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeValueException;
 import com.amazon.ata.music.playlist.service.models.requests.CreatePlaylistRequest;
 import com.amazon.ata.music.playlist.service.models.results.CreatePlaylistResult;
@@ -15,7 +16,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 
 public class CreatePlaylistActivityTest {
@@ -74,7 +75,7 @@ public class CreatePlaylistActivityTest {
                 .withTags(tags)
                 .build();
 
-        doNothing().when(playlistDao).savePlaylist(any());
+        when(playlistDao.savePlaylist(any(Playlist.class))).thenReturn(null);
 
         // WHEN
         CreatePlaylistResult actual = createPlaylistActivity.handleRequest(createPlaylistRequest, context);
@@ -93,7 +94,7 @@ public class CreatePlaylistActivityTest {
                 .withCustomerId(validCustomerId)
                 .build();
 
-        doNothing().when(playlistDao).savePlaylist(any());
+        when(playlistDao.savePlaylist(any(Playlist.class))).thenReturn(null);
 
         // WHEN
         CreatePlaylistResult actual = createPlaylistActivity.handleRequest(createPlaylistRequest, context);

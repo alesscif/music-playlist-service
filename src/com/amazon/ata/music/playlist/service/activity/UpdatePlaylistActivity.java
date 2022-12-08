@@ -1,9 +1,7 @@
 package com.amazon.ata.music.playlist.service.activity;
 
 import com.amazon.ata.music.playlist.service.converters.ModelConverter;
-import com.amazon.ata.music.playlist.service.dependency.DaoModule;
-import com.amazon.ata.music.playlist.service.dependency.DaoModule_ProvideDynamoDBMapperFactory;
-import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao_Factory;
+import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeChangeException;
 import com.amazon.ata.music.playlist.service.exceptions.InvalidAttributeValueException;
@@ -14,9 +12,9 @@ import com.amazon.ata.music.playlist.service.models.results.UpdatePlaylistResult
 import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao;
 
 import com.amazon.ata.music.playlist.service.util.MusicPlaylistServiceUtils;
+import com.amazonaws.services.dynamodbv2.model.Update;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import dagger.internal.DoubleCheck;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,20 +28,13 @@ import java.util.Objects;
  */
 public class UpdatePlaylistActivity implements RequestHandler<UpdatePlaylistRequest, UpdatePlaylistResult> {
     private final Logger log = LogManager.getLogger();
-    private final PlaylistDao playlistDao;
+    @Inject public PlaylistDao playlistDao;
 
-    //public UpdatePlaylistActivity() {
-    //    this(PlaylistDao_Factory.create(DoubleCheck.provider(DaoModule_ProvideDynamoDBMapperFactory
-    //                    .create(new DaoModule())))
-    //            .get());
-    //}
-
-    /**
-     * Instantiates a new UpdatePlaylistActivity object.
-     *
-     * @param playlistDao PlaylistDao to access the playlist table.
-     */
     @Inject
+    public UpdatePlaylistActivity() {
+        DaggerServiceComponent.create().inject(this);
+    }
+
     public UpdatePlaylistActivity(PlaylistDao playlistDao) {
         this.playlistDao = playlistDao;
     }

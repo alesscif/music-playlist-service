@@ -28,7 +28,7 @@ public class UpdatePlaylistActivityTest {
     @BeforeEach
     public void setUp() {
         initMocks(this);
-        updatePlaylistActivity = new UpdatePlaylistActivity(playlistDao);
+        updatePlaylistActivity = new UpdatePlaylistActivity();
     }
 
     @Test

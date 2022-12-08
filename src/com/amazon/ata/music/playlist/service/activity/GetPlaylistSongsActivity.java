@@ -1,7 +1,6 @@
 package com.amazon.ata.music.playlist.service.activity;
 
 import com.amazon.ata.music.playlist.service.converters.ModelConverter;
-import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 import com.amazon.ata.music.playlist.service.models.requests.GetPlaylistSongsRequest;
@@ -15,8 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -26,7 +23,8 @@ import java.util.List;
  */
 public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongsRequest, GetPlaylistSongsResult> {
     private final Logger log = LogManager.getLogger();
-    @Inject private final PlaylistDao playlistDao;
+    //@Inject
+    private final PlaylistDao playlistDao;
 
     /*
     @Inject
@@ -62,14 +60,8 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
         Playlist playlist = playlistDao.getPlaylist(getPlaylistSongsRequest.getId());
         List<AlbumTrack> albumTrackList = playlist.getSongList();
 
-        ModelConverter modelConverter = new ModelConverter();
-        List<SongModel> songList = new LinkedList<>();
-        for (AlbumTrack albumTrack : albumTrackList) {
-            songList.add(modelConverter.toSongModel(albumTrack));
-        }
-
         return GetPlaylistSongsResult.builder()
-                .withSongList(songList)
+                .withSongList(new ModelConverter().toSongModelList(albumTrackList))
                 .build();
     }
 }

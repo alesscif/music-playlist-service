@@ -8,10 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ModelConverterTest {
     private ModelConverter modelConverter = new ModelConverter();
@@ -88,14 +85,16 @@ public class ModelConverterTest {
         albumTrack.setTrackNumber(0);
         albumTrack.setAlbumName("album");
         albumTrack.setSongTitle("title");
+        List<AlbumTrack> albumTracks = new LinkedList<>();
+        albumTracks.add(albumTrack);
 
         // WHEN
-        SongModel actual = modelConverter.toSongModel(albumTrack);
+        List<SongModel> actual = modelConverter.toSongModelList(albumTracks);
 
         // THEN
-        assertEquals("0", actual.getAsin());
-        assertEquals(0, actual.getTrackNumber());
-        assertEquals("album", actual.getAlbum());
-        assertEquals("title", actual.getTitle());
+        assertEquals("0", actual.get(0).getAsin());
+        assertEquals(0, actual.get(0).getTrackNumber());
+        assertEquals("album", actual.get(0).getAlbum());
+        assertEquals("title", actual.get(0).getTitle());
     }
 }

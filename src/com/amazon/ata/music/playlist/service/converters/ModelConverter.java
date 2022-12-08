@@ -6,11 +6,13 @@ import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 import com.amazon.ata.music.playlist.service.models.SongModel;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ModelConverter {
     /**
      * Converts a provided {@link Playlist} into a {@link PlaylistModel} representation.
+     *
      * @param playlist the playlist to convert
      * @return the converted playlist
      */
@@ -28,12 +30,18 @@ public class ModelConverter {
                 .build();
     }
 
-    public SongModel toSongModel(AlbumTrack albumTrack) {
-        return SongModel.builder()
-                .withAsin(albumTrack.getAsin())
-                .withAlbum(albumTrack.getAlbumName())
-                .withTrackNumber(albumTrack.getTrackNumber())
-                .withTitle(albumTrack.getSongTitle())
-                .build();
+    public List<SongModel> toSongModelList(List<AlbumTrack> albumTracks) {
+        List<SongModel> songModelList = new LinkedList<>();
+        for (AlbumTrack albumTrack : albumTracks) {
+            songModelList.add(
+                    SongModel.builder()
+                            .withAsin(albumTrack.getAsin())
+                            .withAlbum(albumTrack.getAlbumName())
+                            .withTrackNumber(albumTrack.getTrackNumber())
+                            .withTitle(albumTrack.getSongTitle())
+                            .build()
+            );
+        }
+        return songModelList;
     }
 }

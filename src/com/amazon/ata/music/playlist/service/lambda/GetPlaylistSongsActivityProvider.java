@@ -1,5 +1,8 @@
 package com.amazon.ata.music.playlist.service.lambda;
 
+import com.amazon.ata.music.playlist.service.activity.GetPlaylistActivity;
+import com.amazon.ata.music.playlist.service.activity.GetPlaylistSongsActivity;
+import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.music.playlist.service.dependency.ServiceComponent;
 import com.amazon.ata.music.playlist.service.models.requests.GetPlaylistSongsRequest;
 import com.amazon.ata.music.playlist.service.models.results.GetPlaylistSongsResult;
@@ -13,10 +16,13 @@ public class GetPlaylistSongsActivityProvider implements RequestHandler<GetPlayl
 
     @Override
     public GetPlaylistSongsResult handleRequest(final GetPlaylistSongsRequest getPlaylistSongsRequest, Context context) {
-        return getServiceComponent().provideGetPlaylistSongsActivity().handleRequest(getPlaylistSongsRequest, context);
+        ServiceComponent dagger = getServiceComponent();
+        GetPlaylistSongsActivity getPlaylistSongsActivity = dagger.provideGetPlaylistSongsActivity();
+        dagger.inject(getPlaylistSongsActivity);
+        return getPlaylistSongsActivity.handleRequest(getPlaylistSongsRequest, context);
     }
 
     private ServiceComponent getServiceComponent() {
-        return null;//DaggerServiceComponent.create();
+        return DaggerServiceComponent.create();
     }
 }

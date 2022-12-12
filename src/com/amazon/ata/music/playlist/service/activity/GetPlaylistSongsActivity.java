@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
-import java.util.List;
+import java.util.*;
 
 /**
  * Implementation of the GetPlaylistSongsActivity for the MusicPlaylistService's GetPlaylistSongs API.
@@ -23,15 +23,10 @@ import java.util.List;
  */
 public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongsRequest, GetPlaylistSongsResult> {
     private final Logger log = LogManager.getLogger();
-    //@Inject
-    private final PlaylistDao playlistDao;
+    @Inject public PlaylistDao playlistDao;
 
-    /*
-    @Inject
     public GetPlaylistSongsActivity() {
-    DaggerServiceComponent.create().inject(this);
     }
-    */
 
     /**
      * Instantiates a new GetPlaylistSongsActivity object.
@@ -59,6 +54,19 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
 
         Playlist playlist = playlistDao.getPlaylist(getPlaylistSongsRequest.getId());
         List<AlbumTrack> albumTrackList = playlist.getSongList();
+
+        switch (getPlaylistSongsRequest.getOrder()) {
+            case DEFAULT:
+                break;
+            case REVERSED:
+                Collections.reverse(albumTrackList);
+                break;
+            case SHUFFLED:
+                Collections.shuffle(albumTrackList);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid song order.");
+        }
 
         return GetPlaylistSongsResult.builder()
                 .withSongList(new ModelConverter().toSongModelList(albumTrackList))

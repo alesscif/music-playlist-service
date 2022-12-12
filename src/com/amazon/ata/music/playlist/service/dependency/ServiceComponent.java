@@ -1,10 +1,7 @@
 package com.amazon.ata.music.playlist.service.dependency;
 
 import com.amazon.ata.music.playlist.service.activity.*;
-import com.amazon.ata.music.playlist.service.dynamodb.AlbumTrackDao;
-import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao;
 import dagger.Component;
-import org.checkerframework.checker.units.qual.A;
 
 import javax.inject.Singleton;
 
@@ -17,8 +14,9 @@ public interface ServiceComponent {
     AddSongToPlaylistActivity provideAddSongToPlaylistActivity();
     GetPlaylistSongsActivity provideGetPlaylistSongsActivity();
 
-    void inject(CreatePlaylistActivity create);
-    void inject(UpdatePlaylistActivity update);
     void inject(AddSongToPlaylistActivity add);
-    void inject(GetPlaylistSongsActivity get);
+    void inject(CreatePlaylistActivity create);
+    void inject(GetPlaylistActivity getPlaylist);
+    void inject(GetPlaylistSongsActivity getSongs);
+    void inject(UpdatePlaylistActivity update);
 }

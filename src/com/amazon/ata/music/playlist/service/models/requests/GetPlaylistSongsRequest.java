@@ -67,7 +67,7 @@ public class GetPlaylistSongsRequest {
         private SongOrder order;
 
         private Builder() {
-
+            this.order = SongOrder.DEFAULT;
         }
 
         public Builder withId(String idToUse) {

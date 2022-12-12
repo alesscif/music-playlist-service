@@ -142,7 +142,7 @@ public class AddSongToPlaylistActivityTest {
         AlbumTrackTestHelper.assertAlbumTrackEqualsSongModel(albumTrackToAdd, lastSong);
     }
 
-    /*@Test
+    @Test
     void handleRequest_validRequestWithQueueNextTrue_addsSongToBeginningOfPlaylist() {
         // GIVEN
         int startingPlaylistSize = 2;
@@ -175,5 +175,4 @@ public class AddSongToPlaylistActivityTest {
         SongModel firstSong = result.getSongList().get(0);
         AlbumTrackTestHelper.assertAlbumTrackEqualsSongModel(albumTrackToAdd, firstSong);
     }
-    */
 }

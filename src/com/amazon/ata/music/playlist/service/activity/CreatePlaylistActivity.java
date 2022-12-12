@@ -28,13 +28,10 @@ import java.util.Set;
  */
 public class CreatePlaylistActivity implements RequestHandler<CreatePlaylistRequest, CreatePlaylistResult> {
     private final Logger log = LogManager.getLogger();
-    //@Inject
-    public PlaylistDao playlistDao;
+    @Inject public PlaylistDao playlistDao;
 
-    //@Inject
-    //public CreatePlaylistActivity() {
-    //    DaggerServiceComponent.create().inject(this);
-    //}
+    public CreatePlaylistActivity() {
+    }
 
     @Inject
     public CreatePlaylistActivity(PlaylistDao playlistDao) {

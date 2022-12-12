@@ -15,10 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Implementation of the AddSongToPlaylistActivity for the MusicPlaylistService's AddSongToPlaylist API.
@@ -27,15 +24,11 @@ import java.util.List;
  */
 public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlaylistRequest, AddSongToPlaylistResult> {
     private final Logger log = LogManager.getLogger();
-    //@Inject
-    public PlaylistDao playlistDao;
-    //@Inject
-    public AlbumTrackDao albumTrackDao;
+    @Inject public PlaylistDao playlistDao;
+    @Inject public AlbumTrackDao albumTrackDao;
 
-    //@Inject
-    //public AddSongToPlaylistActivity() {
-    //    DaggerServiceComponent.create().inject(this);
-    //}
+    public AddSongToPlaylistActivity() {
+    }
 
     @Inject
     public AddSongToPlaylistActivity(PlaylistDao playlistDao, AlbumTrackDao albumTrackDao) {
@@ -64,9 +57,13 @@ public class AddSongToPlaylistActivity implements RequestHandler<AddSongToPlayli
 
         Playlist playlist = playlistDao.getPlaylist(addSongToPlaylistRequest.getId());
 
-        List<AlbumTrack> albumTrackList = playlist.getSongList();
+        LinkedList<AlbumTrack> albumTrackList = new LinkedList<>(playlist.getSongList());
         AlbumTrack albumTrackToAdd = albumTrackDao.getAlbumTrack(addSongToPlaylistRequest.getAsin(), addSongToPlaylistRequest.getTrackNumber());
-        albumTrackList.add(albumTrackToAdd);
+        if (addSongToPlaylistRequest.isQueueNext()) {
+            albumTrackList.addFirst(albumTrackToAdd);
+        } else {
+            albumTrackList.addLast(albumTrackToAdd);
+        }
         playlist.setSongList(albumTrackList);
         playlist.setSongCount(playlist.getSongCount() + 1);
 

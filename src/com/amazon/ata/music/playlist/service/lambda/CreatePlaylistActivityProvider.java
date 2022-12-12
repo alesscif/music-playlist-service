@@ -1,6 +1,7 @@
 package com.amazon.ata.music.playlist.service.lambda;
 
-//import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
+import com.amazon.ata.music.playlist.service.activity.CreatePlaylistActivity;
+import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.music.playlist.service.dependency.ServiceComponent;
 import com.amazon.ata.music.playlist.service.models.requests.CreatePlaylistRequest;
 import com.amazon.ata.music.playlist.service.models.results.CreatePlaylistResult;
@@ -14,10 +15,13 @@ public class CreatePlaylistActivityProvider implements RequestHandler<CreatePlay
 
     @Override
     public CreatePlaylistResult handleRequest(final CreatePlaylistRequest createPlaylistRequest, Context context) {
-        return getServiceComponent().provideCreatePlaylistActivity().handleRequest(createPlaylistRequest, context);
+        ServiceComponent dagger = getServiceComponent();
+        CreatePlaylistActivity createPlaylistActivity = dagger.provideCreatePlaylistActivity();
+        dagger.inject(createPlaylistActivity);
+        return createPlaylistActivity.handleRequest(createPlaylistRequest, context);
     }
 
     private ServiceComponent getServiceComponent() {
-        return null;//DaggerServiceComponent.create();
+        return DaggerServiceComponent.create();
     }
 }

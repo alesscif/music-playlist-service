@@ -2,6 +2,7 @@ package com.amazon.ata.music.playlist.service.activity;
 
 import com.amazon.ata.music.playlist.service.converters.ModelConverter;
 import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao;
+import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 import com.amazon.ata.music.playlist.service.exceptions.PlaylistNotFoundException;
 import com.amazon.ata.music.playlist.service.models.SongModel;
@@ -14,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,26 +89,26 @@ public class GetPlaylistSongsActivityTest {
         AlbumTrackTestHelper.assertAlbumTracksEqualSongModels(playlist.getSongList(), result.getSongList());
     }
 
-//    @Test
-//    void handleRequest_withReversedSongOrder_returnsReversedPlaylistSongs() {
-//        // GIVEN
-//        Playlist playlist = PlaylistTestHelper.generatePlaylistWithNAlbumTracks(9);
-//        String playlistId = playlist.getId();
-//        List<AlbumTrack> reversedAlbumTracks = new LinkedList<>(playlist.getSongList());
-//        Collections.reverse(reversedAlbumTracks);
-//
-//        GetPlaylistSongsRequest request = GetPlaylistSongsRequest.builder()
-//                                              .withId(playlistId)
-//                                              .withOrder(SongOrder.REVERSED)
-//                                              .build();
-//        when(playlistDao.getPlaylist(playlistId)).thenReturn(playlist);
-//
-//        // WHEN
-//        GetPlaylistSongsResult result = getPlaylistSongsActivity.handleRequest(request, null);
-//
-//        // THEN
-//        AlbumTrackTestHelper.assertAlbumTracksEqualSongModels(reversedAlbumTracks, result.getSongList());
-//    }
+    @Test
+    void handleRequest_withReversedSongOrder_returnsReversedPlaylistSongs() {
+        // GIVEN
+        Playlist playlist = PlaylistTestHelper.generatePlaylistWithNAlbumTracks(9);
+        String playlistId = playlist.getId();
+        List<AlbumTrack> reversedAlbumTracks = new LinkedList<>(playlist.getSongList());
+        Collections.reverse(reversedAlbumTracks);
+
+        GetPlaylistSongsRequest request = GetPlaylistSongsRequest.builder()
+                                              .withId(playlistId)
+                                              .withOrder(SongOrder.REVERSED)
+                                              .build();
+        when(playlistDao.getPlaylist(playlistId)).thenReturn(playlist);
+
+        // WHEN
+        GetPlaylistSongsResult result = getPlaylistSongsActivity.handleRequest(request, null);
+
+        // THEN
+        AlbumTrackTestHelper.assertAlbumTracksEqualSongModels(reversedAlbumTracks, result.getSongList());
+    }
 
     @Test
     void handleRequest_withShuffledSongOrder_returnsSongsInAnyOrder() {
@@ -154,17 +157,21 @@ public class GetPlaylistSongsActivityTest {
         assertThrows(PlaylistNotFoundException.class, () -> getPlaylistSongsActivity.handleRequest(request, null));
     }
 
-//    @Test
-//    public void handleRequest_withInvalidSongOrder_throwsException() {
+    //@Test
+    //public void handleRequest_withInvalidSongOrder_throwsException() {
 //        // GIVEN
 //        Playlist playlist = PlaylistTestHelper.generatePlaylist();
 //        String id = playlist.getId();
 //        GetPlaylistSongsRequest request = GetPlaylistSongsRequest.builder()
 //            .withId(id)
-//            .withOrder("NOT A VALID ORDER")
+//            .withOrder()
 //            .build();
 //
 //        // WHEN + THEN
-//        assertThrows(IllegalArgumentException.class, () -> getPlaylistSongsActivity.handleRequest(request));
-//    }
+//        assertThrows(IllegalArgumentException.class, () -> getPlaylistSongsActivity.handleRequest(request, null));
+    //}
+
+    /*
+    as far as I can tell, this test is impossible: entering an invalid enum would prevent program compilation.
+     */
 }

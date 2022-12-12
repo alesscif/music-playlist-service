@@ -1,6 +1,5 @@
 package com.amazon.ata.music.playlist.service.lambda;
 
-import com.amazon.ata.music.playlist.service.activity.GetPlaylistActivity;
 import com.amazon.ata.music.playlist.service.activity.GetPlaylistSongsActivity;
 import com.amazon.ata.music.playlist.service.dependency.DaggerServiceComponent;
 import com.amazon.ata.music.playlist.service.dependency.ServiceComponent;

@@ -157,7 +157,7 @@ Below are the endpoints required to provide the MLP business requirements
 
 #### Data
 
-* We have worked with our sister team to import a number of albums into a local
+* We have imported a number of albums into a local
   table called `album_tracks` in order to start development.
 * We have created two Java models to represent an item in the playlists and
   `album_tracks` tables
@@ -203,9 +203,6 @@ This section maps the attributes of our tables, with the corresponding DDB type.
     song_title // string
 ```
 
-Our sister team providing the song data has a different attribute naming format.
-We will have to account for this in our Java models when interacting with the
-copy of their table.
 
 ### Class Diagram
 
